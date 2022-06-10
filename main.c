@@ -9,10 +9,17 @@ void main()
 {
     read_map();
 
-    for(int i = 0; i < 5; i++)
+    do
     {
-        printf("%s\n", map[i]);
-    }
+        print_map();
+
+        char command;
+        scanf(" %c", &command);
+
+        move(command);
+
+
+    }while(!endgame());
 
     free_map();
 
@@ -49,6 +56,14 @@ void map_alloc() //allocation suficient memory for the map
     }
 }
 
+void print_map()
+{
+    for(int i = 0; i < 5; i++)
+    {
+        printf("%s\n", map[i]);
+    }
+}
+
 void free_map() //frees the memory allocated by the map
 {
     for(int i = 0; i < lines; i++)
@@ -56,4 +71,49 @@ void free_map() //frees the memory allocated by the map
         free(map[i]);
     }
     free(map);
+}
+
+void move(char direction)
+{
+    int x, y;
+
+    //find the pacman position
+    for(int i = 0; i < lines; i ++)
+    {
+        for(int j = 0; j  < columns; j++)
+        {
+            if(map[i][j] == '@')
+            {
+                x = i;
+                y = j;
+                break;
+            }
+        }
+    }
+
+    switch (direction)
+    {
+    case 'a':
+        map[x][y-1] = '@';
+        break;
+    
+    case 'w':
+        map[x-1][y] = '@';
+        break;
+
+    case 's':
+        map[x+1][y] = '@';
+        break;        
+
+    case 'd':
+        map[x][y+1] = '@';
+        break;
+
+    }
+    map[x][y] = '.';
+}
+
+int endgame()
+{
+    return 0;
 }
