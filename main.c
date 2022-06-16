@@ -18,6 +18,7 @@ void main()
         char command;
         scanf(" %c", &command);
         move(command);
+        ghosts();
 
 
     }while(!endgame());
@@ -65,4 +66,28 @@ void move(char direction)
 int endgame()
 {
     return 0;
+}
+
+void ghosts()
+{
+    MAP copy;
+
+    copy_map(&copy, &m);
+
+    for(int i=0; i<m.lines; i++)
+    {
+        for(int j=0; j<m.columns; j++)
+        {
+            if(copy.matrix[i][j] == GHOST)
+            {
+                printf("here");
+                if(is_empty(&m, i, j+1))
+                {
+                    printf("here");
+                    move_on_the_map(&m, i, j, i, j+1);
+                }
+            }
+        }
+    }
+    free_map(&copy);
 }
