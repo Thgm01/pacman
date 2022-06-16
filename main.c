@@ -28,28 +28,38 @@ void main()
 
 void move(char direction)
 {
-    m.matrix[hero.x][hero.y] = '.';
+    int next_x = hero.x;
+    int next_y = hero.y;
 
     switch (direction)
     {
-    case 'a':
-        hero.y --;
+    case LEFT:
+        next_y --;
         break;
     
-    case 'w':
-        hero.x --;
+    case UP:
+        next_x --;
         break;
 
-    case 's':
-        hero.x ++;
+    case DOWN:
+        next_x ++;
         break;        
 
-    case 'd':
-        hero.y ++;
+    case RIGHT:
+        next_y ++;
         break;
-
+    default:
+        return;
+        break;
     }
-    m.matrix[hero.x][hero.y] = '@';
+
+    if(!is_empty(&m, next_x, next_y))
+        return;
+
+    
+    move_on_the_map(&m, hero.x, hero.y, next_x, next_y);
+    hero.x = next_x;
+    hero.y = next_y;
 }
 
 int endgame()

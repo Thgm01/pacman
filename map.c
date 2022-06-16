@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "map.h"
 
 void read_map(MAP* m)
@@ -63,4 +64,30 @@ void find_in_map(MAP* m, POS* p, char c)
             }
         }
     }
+}
+
+int is_empty(MAP* m, int x, int y)
+{
+
+    return m->matrix[x][y] == '.';
+}
+
+void move_on_the_map(MAP* m, int x_origin, int y_origin, int x_final, int y_final)
+{
+    char character = m->matrix[x_origin][y_origin];
+    m->matrix[x_final][y_final] = character;
+    m->matrix[x_origin][y_origin] = '.';
+}
+
+void copy_map(MAP* copy, MAP* origin)
+{
+    copy->lines = origin->lines;
+    copy->columns = origin->columns;
+
+    map_alloc(copy);
+    for (int i=0; i<origin->lines; i++)
+    {
+        strcpy(copy->matrix[i], origin->matrix[i]);
+    }
+
 }
