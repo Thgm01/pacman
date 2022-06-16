@@ -2,8 +2,6 @@
 #include <stdlib.h>
 #include "map.h"
 
-
-
 void read_map(MAP* m)
 {
     FILE* fp = fopen("map.txt", "r");
@@ -48,4 +46,21 @@ void free_map(MAP* m) //frees the memory allocated by the map
         free(m->matrix[i]);
     }
     free(m->matrix);
+}
+
+void find_in_map(MAP* m, POS* p, char c)
+{
+    //find the pacman position
+    for(int i = 0; i < m->lines; i ++)
+    {
+        for(int j = 0; j  < m->columns; j++)
+        {
+            if(m->matrix[i][j] == c)
+            {
+                p->x = i;
+                p->y = j;
+                break;
+            }
+        }
+    }
 }

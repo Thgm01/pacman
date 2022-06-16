@@ -4,10 +4,12 @@
 #include "map.h"
 
 MAP m;
+POS hero;
 
 void main()
 {
     read_map(&m);
+    find_in_map(&m, &hero, '@');
 
     do
     {
@@ -26,42 +28,28 @@ void main()
 
 void move(char direction)
 {
-    int x, y;
-
-    //find the pacman position
-    for(int i = 0; i < m.lines; i ++)
-    {
-        for(int j = 0; j  < m.columns; j++)
-        {
-            if(m.matrix[i][j] == '@')
-            {
-                x = i;
-                y = j;
-                break;
-            }
-        }
-    }
+    m.matrix[hero.x][hero.y] = '.';
 
     switch (direction)
     {
     case 'a':
-        m.matrix[x][y-1] = '@';
+        hero.y --;
         break;
     
     case 'w':
-        m.matrix[x-1][y] = '@';
+        hero.x --;
         break;
 
     case 's':
-        m.matrix[x+1][y] = '@';
+        hero.x ++;
         break;        
 
     case 'd':
-        m.matrix[x][y+1] = '@';
+        hero.y ++;
         break;
 
     }
-    m.matrix[x][y] = '.';
+    m.matrix[hero.x][hero.y] = '@';
 }
 
 int endgame()
