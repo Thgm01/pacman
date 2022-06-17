@@ -1,3 +1,6 @@
+#ifndef _MAIN_H_
+#define _MAIN_H_
+
 #define UP 'w'
 #define DOWN 's'
 #define LEFT 'a'
@@ -19,3 +22,4 @@ int ghost_movement(int x_origin, int y_origin, int* x_final, int* y_final);
 void explode_pill_directions(int x, int y, int sum_x, int sum_y, int qtd);
 void explode_pill();
 
+#endif

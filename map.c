@@ -3,6 +3,7 @@
 #include <string.h>
 #include "map.h"
 #include "main.h"
+#include "ui.h"
 
 void read_map(MAP* m)
 {
@@ -30,14 +31,6 @@ void map_alloc(MAP* m) //allocation suficient memory for the map
     for(int i = 0; i < m->lines; i++)
     {
         m->matrix[i] = malloc(sizeof(char) * m->columns+1); //alloc the number of chars in the pointer (columns)
-    }
-}
-
-void print_map(MAP* m)
-{
-    for(int i = 0; i < 5; i++)
-    {
-        printf("%s\n", m->matrix[i]);
     }
 }
 

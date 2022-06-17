@@ -1,3 +1,6 @@
+#ifndef _MAP_H_
+#define _MAP_H_
+
 struct map //agroup realated variables
 {
     char** matrix;
@@ -13,7 +16,6 @@ typedef struct position
 
 void read_map(MAP* m);
 void map_alloc(MAP* m);
-void print_map(MAP* m);
 void free_map(MAP* m);
 int find_in_map(MAP* m, POS* p, char c);
 int is_empty(MAP* m, int x, int y);
@@ -23,3 +25,4 @@ int can_move(MAP* m, char character, int x, int y);
 int is_character (MAP* m, char character, int x, int y);
 int is_wall(MAP* m, int x, int y);
 
+#endif

@@ -1,8 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+
 #include "main.h"
 #include "map.h"
+#include "ui.h"
 
 MAP m;
 POS hero;
@@ -10,15 +12,16 @@ int have_pill = 0;
 
 void main()
 {
+    system("cls");
     read_map(&m);
     find_in_map(&m, &hero, '@');
 
     do
     {   
         printf("Have Pill: %s\n\n", (have_pill ? "YES" : "NO"));
-
+        system("cls");
         print_map(&m);
-
+        
         char command;
         scanf(" %c", &command);
         move(command);
@@ -28,6 +31,7 @@ void main()
 
     }while(!endgame());
 
+    system("cls");
     free_map(&m);
 
 }
