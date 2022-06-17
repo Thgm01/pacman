@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 #include "main.h"
 #include "map.h"
 
@@ -80,14 +81,41 @@ void ghosts()
         {
             if(copy.matrix[i][j] == GHOST)
             {
-                printf("here");
-                if(is_empty(&m, i, j+1))
+                int x_final;
+                int y_final;
+
+                int find = ghost_movement(i,j, &x_final, &y_final);
+                
+                if(find)
                 {
-                    printf("here");
-                    move_on_the_map(&m, i, j, i, j+1);
+                    move_on_the_map(&m, i, j, x_final, y_final);
                 }
             }
         }
     }
     free_map(&copy);
+}
+
+int ghost_movement(int x_origin, int y_origin, int* x_final, int* y_final)
+{
+    int options[4][2]=
+    {
+        {x_origin, y_origin+1},
+        {x_origin+1, y_origin},
+        {x_origin, y_origin-1},
+        {x_origin-1, y_origin}
+    };
+
+    srand(time(NULL));
+    for(int i=0; i<10; i++)
+    {
+        int position = rand() % 4;
+        if(is_empty(&m, options[position][0], options[position][1]))
+        {
+            *x_final = options[position][0];
+            *y_final = options[position][1];
+            return 1;
+        }
+    }
+    return 0;
 }
