@@ -6,6 +6,7 @@
 
 MAP m;
 POS hero;
+int have_pill = 0;
 
 void main()
 {
@@ -13,12 +14,15 @@ void main()
     find_in_map(&m, &hero, '@');
 
     do
-    {
+    {   
+        printf("Have Pill: %s\n\n", (have_pill ? "YES" : "NO"));
+
         print_map(&m);
 
         char command;
         scanf(" %c", &command);
         move(command);
+        if(command == BOMB) explode_pill();
         ghosts();
 
 
@@ -58,6 +62,10 @@ void move(char direction)
     if(!can_move(&m, HERO, next_x, next_y))
         return;
 
+    if(is_character(&m, PILL, next_x, next_y))
+    {
+        have_pill = 1;
+    }
     
     move_on_the_map(&m, hero.x, hero.y, next_x, next_y);
     hero.x = next_x;
@@ -121,4 +129,24 @@ int ghost_movement(int x_origin, int y_origin, int* x_final, int* y_final)
         }
     }
     return 0;
+}
+
+void explode_pill()
+{
+    if(!have_pill) return;
+    explode_pill_directions(hero.x, hero.y, 0, 1, 3);
+    explode_pill_directions(hero.x, hero.y, 0, -1, 3);
+    explode_pill_directions(hero.x, hero.y, 1, 0, 3);
+    explode_pill_directions(hero.x, hero.y, -1, 0, 3);
+
+    have_pill = 0;
+}
+
+void explode_pill_directions(int x, int y, int sum_x, int sum_y, int qtd)
+{
+    if(qtd == 0 || is_wall(&m, x+sum_x, y+sum_y)) return;
+    m.matrix[x+sum_x][y+sum_y] = '.';
+
+    explode_pill_directions(x+sum_x, y+sum_y, sum_x, sum_y, qtd - 1);
+
 }
