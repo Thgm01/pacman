@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "map.h"
+#include "main.h"
 
 void read_map(MAP* m)
 {
@@ -49,7 +50,7 @@ void free_map(MAP* m) //frees the memory allocated by the map
     free(m->matrix);
 }
 
-void find_in_map(MAP* m, POS* p, char c)
+int find_in_map(MAP* m, POS* p, char c)
 {
     //find the pacman position
     for(int i = 0; i < m->lines; i ++)
@@ -60,15 +61,15 @@ void find_in_map(MAP* m, POS* p, char c)
             {
                 p->x = i;
                 p->y = j;
-                break;
+                return 1;
             }
         }
     }
+    return 0;
 }
 
 int is_empty(MAP* m, int x, int y)
 {
-
     return m->matrix[x][y] == '.';
 }
 
@@ -90,4 +91,25 @@ void copy_map(MAP* copy, MAP* origin)
         strcpy(copy->matrix[i], origin->matrix[i]);
     }
 
+}
+
+int can_move(MAP* m, char character, int x, int y)
+{
+    return
+        !is_wall(m, x, y) &&
+        !is_character(m, character, x, y);
+
+}
+
+int is_wall(MAP* m, int x, int y)
+{
+    return
+        m->matrix[x][y] == VERTICAL_WALL ||
+        m->matrix[x][y] == HORIZONTAL_WALL;
+
+}
+
+int is_character (MAP* m, char character, int x, int y)
+{
+    return m->matrix[x][y] == character;
 }

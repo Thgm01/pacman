@@ -55,7 +55,7 @@ void move(char direction)
         break;
     }
 
-    if(!is_empty(&m, next_x, next_y))
+    if(!can_move(&m, HERO, next_x, next_y))
         return;
 
     
@@ -66,7 +66,9 @@ void move(char direction)
 
 int endgame()
 {
-    return 0;
+    POS position;
+    int find_hero = find_in_map(&m, &position, HERO);
+    return !find_hero;
 }
 
 void ghosts()
@@ -110,7 +112,8 @@ int ghost_movement(int x_origin, int y_origin, int* x_final, int* y_final)
     for(int i=0; i<10; i++)
     {
         int position = rand() % 4;
-        if(is_empty(&m, options[position][0], options[position][1]))
+
+        if(can_move(&m, GHOST, options[position][0], options[position][1]))
         {
             *x_final = options[position][0];
             *y_final = options[position][1];

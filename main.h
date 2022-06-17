@@ -6,6 +6,9 @@
 #define HERO '@'
 #define GHOST 'G'
 
+#define VERTICAL_WALL '|'
+#define HORIZONTAL_WALL '-'
+
 void move(char direction);
 int endgame();
 void ghosts();
